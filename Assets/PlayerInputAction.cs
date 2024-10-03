@@ -159,7 +159,18 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""ScreenTouch"",
+                    ""groups"": ""MouseTouch"",
+                    ""action"": ""PrimaryContact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4147707b-d587-40a2-ac7a-da7ead97a16b"",
+                    ""path"": ""<Touchscreen>/primaryTouch/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Touch"",
                     ""action"": ""PrimaryContact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -170,7 +181,18 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""ScreenTouch"",
+                    ""groups"": ""MouseTouch"",
+                    ""action"": ""PrimaryPosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8737a599-71af-4908-b7fb-36f06bc0f90e"",
+                    ""path"": ""<Touchscreen>/primaryTouch/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Touch"",
                     ""action"": ""PrimaryPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -202,11 +224,22 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""ScreenTouch"",
-            ""bindingGroup"": ""ScreenTouch"",
+            ""name"": ""MouseTouch"",
+            ""bindingGroup"": ""MouseTouch"",
             ""devices"": [
                 {
                     ""devicePath"": ""<Mouse>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Touch"",
+            ""bindingGroup"": ""Touch"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Touchscreen>"",
                     ""isOptional"": false,
                     ""isOR"": false
                 }
@@ -365,13 +398,22 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_GamepadSchemeIndex];
         }
     }
-    private int m_ScreenTouchSchemeIndex = -1;
-    public InputControlScheme ScreenTouchScheme
+    private int m_MouseTouchSchemeIndex = -1;
+    public InputControlScheme MouseTouchScheme
     {
         get
         {
-            if (m_ScreenTouchSchemeIndex == -1) m_ScreenTouchSchemeIndex = asset.FindControlSchemeIndex("ScreenTouch");
-            return asset.controlSchemes[m_ScreenTouchSchemeIndex];
+            if (m_MouseTouchSchemeIndex == -1) m_MouseTouchSchemeIndex = asset.FindControlSchemeIndex("MouseTouch");
+            return asset.controlSchemes[m_MouseTouchSchemeIndex];
+        }
+    }
+    private int m_TouchSchemeIndex = -1;
+    public InputControlScheme TouchScheme
+    {
+        get
+        {
+            if (m_TouchSchemeIndex == -1) m_TouchSchemeIndex = asset.FindControlSchemeIndex("Touch");
+            return asset.controlSchemes[m_TouchSchemeIndex];
         }
     }
     public interface IPlayerActions

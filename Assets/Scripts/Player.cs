@@ -1,3 +1,9 @@
+/*
+Author: Bharath Kumar S
+Date: 02-10-2024
+Description: Handels all player logic
+*/
+
 using UnityEngine;
 
 public class Player : MonoBehaviour {
@@ -24,9 +30,11 @@ public class Player : MonoBehaviour {
 
     private void Update() {
         if (isDragging) {
+            //from mouse
             MovePlayerTowardsTarget();
         }
         else {
+            //from keyboard or game pad
             HandlePlayerMovement();
         }
     }

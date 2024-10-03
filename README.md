@@ -61,7 +61,7 @@ Learn key shortcuts like `W` for moving objects, `E` for rotating, and using `Sh
 
 ---
 
-## 12. Singleton Pattern
+## 2. Singleton Pattern
 
 Singleton ensures a class only has one instance globally, often used for managers or game controllers.
 

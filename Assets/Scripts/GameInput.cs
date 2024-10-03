@@ -1,3 +1,9 @@
+/*
+Author: Bharath Kumar S
+Date: 02-10-2024
+Description: Handels all the game input from mouse, keyboard, touch and gamepad 
+*/
+
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;

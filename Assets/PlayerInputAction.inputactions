@@ -137,7 +137,18 @@
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "ScreenTouch",
+                    "groups": "MouseTouch",
+                    "action": "PrimaryContact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4147707b-d587-40a2-ac7a-da7ead97a16b",
+                    "path": "<Touchscreen>/primaryTouch/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Touch",
                     "action": "PrimaryContact",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -148,7 +159,18 @@
                     "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",
-                    "groups": "ScreenTouch",
+                    "groups": "MouseTouch",
+                    "action": "PrimaryPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8737a599-71af-4908-b7fb-36f06bc0f90e",
+                    "path": "<Touchscreen>/primaryTouch/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Touch",
                     "action": "PrimaryPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -180,11 +202,22 @@
             ]
         },
         {
-            "name": "ScreenTouch",
-            "bindingGroup": "ScreenTouch",
+            "name": "MouseTouch",
+            "bindingGroup": "MouseTouch",
             "devices": [
                 {
                     "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "Touch",
+            "bindingGroup": "Touch",
+            "devices": [
+                {
+                    "devicePath": "<Touchscreen>",
                     "isOptional": false,
                     "isOR": false
                 }
