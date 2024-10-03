@@ -64,10 +64,10 @@ public class GameManager : MonoBehaviour {
                 if (!isSpawnedOnce) {
 
                     Instantiate(playerPrefab);
-                    // Instantiate(enemyPrefab);
+                    //  Instantiate(enemyPrefab);
                     Instantiate(playerRestrictionsPrefab);
                     Instantiate(enemyRestrictionsPrefab);
-                    //Instantiate(puckPrefab);
+
                     isSpawnedOnce = true;
                 }
                 break;
@@ -131,7 +131,19 @@ public class GameManager : MonoBehaviour {
     public bool IsGamePlaying() {
         return state == State.GamePlaying;
     }
-
+    public void PlayAgain() {
+        state = State.WaitingToStart;
+        countDownTime = 3f;
+        playerBlueScore = 0;
+        playerRedScore = 0;
+        OnGameStateChanged?.Invoke(this, EventArgs.Empty);
+        OnPlayerRedScored.Invoke(this, new OnPlayerScoredEventArgs {
+            score = playerRedScore,
+        });
+        OnPlayerBlueScored.Invoke(this, new OnPlayerScoredEventArgs {
+            score = playerBlueScore,
+        });
+    }
     public bool IsGameOver() {
         return state == State.GameOver;
     }

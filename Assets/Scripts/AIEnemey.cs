@@ -11,9 +11,6 @@ public class AIEnemy : MonoBehaviour {
     public float MaxMovementSpeed;
     private Rigidbody2D rb;
     private Vector2 startingPosition;
-
-    public Rigidbody2D Puck;
-
     public Transform PlayerBoundaryHolder;
     private Boundary playerBoundary;
     private Vector2 targetPosition;
@@ -36,7 +33,7 @@ public class AIEnemy : MonoBehaviour {
         float movementSpeed;
 
         // If the puck is outside the AI's boundary (on the player's side)
-        if (Puck.position.x < playerBoundary.Left) {
+        if (Puck.Instance.transform.position.x < playerBoundary.Left) {
             if (isFirstTimeInOpponentsHalf) {
                 isFirstTimeInOpponentsHalf = false;
                 offsetXFromTarget = Random.Range(-1f, 1f); // Offset for variation
@@ -47,7 +44,7 @@ public class AIEnemy : MonoBehaviour {
 
             // Follow the puck's Y position with a slight offset
             targetPosition = new Vector2(startingPosition.x, // Keep AI in its starting X position
-                              Mathf.Clamp(Puck.position.y + offsetXFromTarget, // Follow puck Y
+                              Mathf.Clamp(Puck.Instance.transform.position.y + offsetXFromTarget, // Follow puck Y
                                         playerBoundary.Down + 0.5f, // Clamp Y within boundaries
                                         playerBoundary.Up - 0.5f));
         }
@@ -59,8 +56,8 @@ public class AIEnemy : MonoBehaviour {
             movementSpeed = Random.Range(MaxMovementSpeed * 0.4f, MaxMovementSpeed);
 
             // Follow puck's position within the AI's allowed area
-            targetPosition = new Vector2(Mathf.Clamp(Puck.position.x, playerBoundary.Left, playerBoundary.Right),
-                                         Mathf.Clamp(Puck.position.y, playerBoundary.Down, playerBoundary.Up));
+            targetPosition = new Vector2(Mathf.Clamp(Puck.Instance.transform.position.x, playerBoundary.Left, playerBoundary.Right),
+                                         Mathf.Clamp(Puck.Instance.transform.position.y, playerBoundary.Down, playerBoundary.Up));
         }
 
         // Move the AI towards the target position smoothly

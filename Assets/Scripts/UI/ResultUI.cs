@@ -14,7 +14,8 @@ public class ResultUI : MonoBehaviour {
     [SerializeField] private Button menuButton;
     private void Awake() {
         playAgainButton.onClick.AddListener(() => {
-            Loader.Load(Loader.Scene.GameScene);
+            GameManager.Instance.PlayAgain();
+            Hide();
         });
         menuButton.onClick.AddListener(() => {
             Loader.Load(Loader.Scene.MainMenuScene);

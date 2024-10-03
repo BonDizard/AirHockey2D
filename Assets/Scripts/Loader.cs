@@ -3,6 +3,7 @@
  * Date: 03-10-2024
  * Description: Handels Scene Loading
  */
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,5 +18,7 @@ public static class Loader {
         targetScene = scene;
         SceneManager.LoadScene(targetScene.ToString());
     }
-
+    public static void LoadNetwork(Scene scene) {
+        NetworkManager.Singleton.SceneManager.LoadScene(scene.ToString(), LoadSceneMode.Single);
+    }
 }

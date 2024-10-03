@@ -1,10 +1,16 @@
+/*
+Author: Bharath Kumar S
+Date: 03-10-2024
+Description: Puck logic
+*/
 using System;
 using UnityEngine;
 using System.Collections;  // For Coroutine
 
 public class Puck : MonoBehaviour {
     public static Puck Instance { get; private set; }
-
+    private const string RED_SCORE_COLLISION_TAG = "RedScore";
+    private const string BLUE_SCORE_COLLISION_TAG = "BlueScore";
     [SerializeField] private float movementSpeed = 7f;
     [SerializeField] private float maxSpeed = 10f;  // Limit maximum speed
 
@@ -34,12 +40,12 @@ public class Puck : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (!wasGoal) {  // Check to avoid multiple triggers
-            if (other.CompareTag("RedScore")) {
+            if (other.CompareTag(RED_SCORE_COLLISION_TAG)) {
                 wasGoal = true;
                 OnGoalScored?.Invoke(false);  // Notify GameManager of Red player goal
                 StartCoroutine(ResetPuckWithDelay(false));
             }
-            else if (other.CompareTag("BlueScore")) {
+            else if (other.CompareTag(BLUE_SCORE_COLLISION_TAG)) {
                 wasGoal = true;
                 OnGoalScored?.Invoke(true);  // Notify GameManager of Blue player goal
                 StartCoroutine(ResetPuckWithDelay(true));
