@@ -14,7 +14,7 @@ public class Player : MonoBehaviour {
 
     private Vector2 targetPosition;
     private bool isDragging = false;
-    private Rigidbody2D rigidbody2D;
+    private new Rigidbody2D rigidbody2D;
     private Vector2 playerSize;
     private Boundary playerBoundary;
 

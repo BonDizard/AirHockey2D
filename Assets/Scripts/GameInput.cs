@@ -43,6 +43,8 @@ public class GameInput : MonoBehaviour {
         playerInputAction.Player.Pause.performed -= PlayerInputAction_Pause_Performed;
         playerInputAction.Player.PrimaryContact.started -= PlayerInputAction_Touch_Started;
         playerInputAction.Player.PrimaryContact.canceled -= PlayerInputAction_Touch_Canceled;
+
+        playerInputAction.Dispose();
     }
 
     private void Update() {

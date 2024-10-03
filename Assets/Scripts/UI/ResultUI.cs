@@ -22,17 +22,17 @@ public class ResultUI : MonoBehaviour {
     }
     private void Start() {
         Hide();
-        Puck.Instance.OnGameLost += Puck_OnGameLost;
-        Puck.Instance.OnGameWon += Puck_OnGameWon;
+        GameManager.Instance.OnGameLost += GameManager_OnGameLost;
+        GameManager.Instance.OnGameWon += GameManager_OnGameWon;
     }
 
-    private void Puck_OnGameLost(object sender, EventArgs e) {
+    private void GameManager_OnGameLost(object sender, EventArgs e) {
         Show();
         Time.timeScale = 0f;
         resultText.text = "YOU LOST!";
     }
 
-    private void Puck_OnGameWon(object sender, EventArgs e) {
+    private void GameManager_OnGameWon(object sender, EventArgs e) {
         Show();
         resultText.text = "YOU WON!";
     }

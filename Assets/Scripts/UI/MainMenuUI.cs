@@ -15,7 +15,7 @@ public class MainMenuUI : MonoBehaviour {
             Loader.Load(Loader.Scene.GameScene);
         });
         playOnline.onClick.AddListener(() => {
-            Loader.Load(Loader.Scene.GameScene);
+            Loader.Load(Loader.Scene.LobbyScene);
         });
     }
 }

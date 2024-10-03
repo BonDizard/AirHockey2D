@@ -26,6 +26,6 @@ public class PauseUI : MonoBehaviour {
         gameObject.SetActive(false);
     }
     private void Show() {
-        gameObject.SetActive(false);
+        gameObject.SetActive(true);
     }
 }
