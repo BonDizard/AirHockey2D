@@ -1,3 +1,8 @@
+/*
+Author: Bharath Kumar S
+Date: 03-10-2024
+Description: Boundary data type for restrictions
+*/
 
 public struct Boundary {
     public float Up, Down, Left, Right;

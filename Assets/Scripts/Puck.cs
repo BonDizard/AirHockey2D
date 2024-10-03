@@ -1,50 +1,95 @@
-/*
-Author: Bharath Kumar S
-Date: 03-10-2024
-Description: Handles all puck logic
-*/
-
+using System;
 using UnityEngine;
+using System.Collections;  // For Coroutine
 
 public class Puck : MonoBehaviour {
+    private const string BLUE_PLAYER_SCORE_TAG = "BlueScore";
+    private const string RED_PLAYER_SCORE_TAG = "RedScore";
+
+    public static Puck Instance { get; private set; }
     [SerializeField] private float movementSpeed = 7f;
-    [SerializeField] private float minSpeedThreshold = 1f; // Minimum speed to prevent getting stuck
-    private Vector2 moveDirection;
-    private new Rigidbody2D rigidbody2D;
+    [SerializeField] private float maxSpeed = 10f;  // Limit maximum speed
+    public event EventHandler<OnPlayerScoredEventArgs> OnPlayerRedScored;
+    public event EventHandler<OnPlayerScoredEventArgs> OnPlayerBlueScored;
+    public event EventHandler OnGameWon;
+    public event EventHandler OnGameLost;
+
+    public class OnPlayerScoredEventArgs : EventArgs {
+        public int score;
+    }
+
+    private Rigidbody2D rigidbody2D;
+    private int playerBlueScore = 0;
+    private int playerRedScore = 0;
+    private int maxScore = 5;
+    private bool wasGoal = false;  // Similar to your friend's 'WasGoal'
 
     private void Awake() {
+        Instance = this;
         rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
     private void Start() {
-        // Generate a random direction for the puck to move in at the start
-        moveDirection = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
-
-        // Move in the set random direction with the given speed
-        rigidbody2D.velocity = moveDirection * movementSpeed;
+        // Initial movement, no delay
+        StartGame();
     }
 
     private void FixedUpdate() {
-        // Keep the puck moving at a constant speed in the current direction
-        MaintainConstantSpeed();
+        // Maintain constant speed and limit maximum velocity for smoother control
+        rigidbody2D.velocity = Vector2.ClampMagnitude(rigidbody2D.velocity.normalized * movementSpeed, maxSpeed);
     }
 
-    private void MaintainConstantSpeed() {
-        // Get the current velocity direction (ignoring the speed part)
-        Vector2 currentDirection = rigidbody2D.velocity.normalized;
-
-        // Apply the same movement speed to keep it constant
-        rigidbody2D.velocity = currentDirection * movementSpeed;
-
-        // Prevent the puck from getting stuck by applying a small nudge if velocity drops too low
-        if (rigidbody2D.velocity.magnitude < minSpeedThreshold) {
-            // Apply a small random nudge to get it out of stuck situations
-            Vector2 nudgeDirection = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
-            rigidbody2D.velocity = nudgeDirection * movementSpeed;
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (!wasGoal) {  // Check to avoid multiple triggers
+            if (other.CompareTag(RED_PLAYER_SCORE_TAG)) {
+                playerRedScore++;
+                wasGoal = true;
+                OnPlayerRedScored?.Invoke(this, new OnPlayerScoredEventArgs { score = playerRedScore });
+                StartCoroutine(ResetPuckWithDelay(false));  // Reset puck after Red player scores
+                CheckForGameEnd();
+            }
+            else if (other.CompareTag(BLUE_PLAYER_SCORE_TAG)) {
+                playerBlueScore++;
+                wasGoal = true;
+                OnPlayerBlueScored?.Invoke(this, new OnPlayerScoredEventArgs { score = playerBlueScore });
+                StartCoroutine(ResetPuckWithDelay(true));  // Reset puck after Blue player scores
+                CheckForGameEnd();
+            }
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) {
-        // Optionally handle puck collisions with players, walls, or other objects here
+    private IEnumerator ResetPuckWithDelay(bool didEnemyScore) {
+        // Wait for 1 second before resetting the puck
+        yield return new WaitForSecondsRealtime(1);
+        wasGoal = false;
+
+        // Reset puck to center position
+        rigidbody2D.velocity = Vector2.zero;  // Stop the puck
+
+        if (didEnemyScore) {
+            rigidbody2D.position = new Vector2(0, -1);  // Set enemy's position
+        }
+        else {
+            rigidbody2D.position = new Vector2(0, 1);   // Set player's position
+        }
+
+        // Start movement again without waiting for an additional delay
+        StartGame();
+    }
+
+    private void StartGame() {
+        // Assign a new random direction and start moving the puck
+        Vector2 newDirection = new Vector2(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f)).normalized;
+        rigidbody2D.velocity = newDirection * movementSpeed;
+    }
+
+    private void CheckForGameEnd() {
+        // Check if either player has won the game
+        if (playerBlueScore >= maxScore) {
+            OnGameWon?.Invoke(this, EventArgs.Empty);  // Game won by Blue player
+        }
+        else if (playerRedScore >= maxScore) {
+            OnGameLost?.Invoke(this, EventArgs.Empty);  // Game lost (won by Red player)
+        }
     }
 }

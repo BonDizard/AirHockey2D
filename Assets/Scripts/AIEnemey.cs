@@ -1,3 +1,9 @@
+/*
+Author: Bharath Kumar S
+Date: 03-10-2024
+Description: Ai enemy logic
+*/
+
 using UnityEngine;
 
 public class AIEnemy : MonoBehaviour {
