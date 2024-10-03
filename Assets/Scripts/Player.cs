@@ -9,17 +9,6 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 
     public static Player Instance { get; private set; }
-
-    public struct Boundary {
-        public float Up, Down, Left, Right;
-        public Boundary(float up, float down, float left, float right) {
-            Up = up;
-            Down = down;
-            Left = left;
-            Right = right;
-        }
-    }
-
     [SerializeField] private float movementSpeed = 7f;
     [SerializeField] private Transform restrictions;
 
